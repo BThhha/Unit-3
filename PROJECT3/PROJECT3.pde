@@ -74,6 +74,22 @@ void draw() {
   if (showStampPanel) text("DRAW", 455, 105);
   else text("STAMP", 455, 105);
   
+  // Save button
+  tactile(20, 130, 60, 30, 9);
+  if (hover == 9) fill(200); else fill(150);
+  rect(20, 130, 60, 30);
+  fill(0);
+  textSize(12);
+  text("SAVE", 35, 150);
+  
+  
+  //load
+  tactile(90, 130, 60, 30, 10);
+  if (hover == 10) fill(200); else fill(150);
+  rect(90, 130, 60, 30);
+  fill(0);
+  text("LOAD", 105, 150);
+  
   // Drawing area border
   noFill();
   stroke(0);
@@ -120,6 +136,15 @@ void draw() {
     rect(670, 90, 50, 50);
     if (applecat != null) image(applecat, 675, 95, 40, 40);
   }
+  if (mousePressed && mouseX > 20 && mouseX < 80 && mouseY > 130 && mouseY < 160) {
+    selectOutput("Save your drawing", "saveImage");
+  }
+  
+  // Load button click
+  if (mousePressed && mouseX > 90 && mouseX < 150 && mouseY > 130 && mouseY < 160) {
+    selectInput("Load an image", "openImage");
+  }
+  
   
   // Slider
   if (mousePressed && dist(mouseX, mouseY, knobLine, 25) < 10) {
@@ -149,6 +174,8 @@ void draw() {
   }
 }
 
+
+
 void mouseDragged() {
   if (!showStampPanel) {
     if (mouseX > 300 && mouseX < 880 && mouseY > 140 && mouseY < 680) {
@@ -175,6 +202,20 @@ void mouseDragged() {
 void mouseReleased() {
   if (mouseX > 420 && mouseX < 500 && mouseY > 80 && mouseY < 120) {
     showStampPanel = !showStampPanel;
+  }
+}
+  void saveImage(File f) {
+  if (f != null) {
+    PImage canvas = get(300, 140, 580, 540);
+    canvas.save(f.getAbsolutePath());
+  }
+}
+
+// Load function
+void openImage(File f) {
+  if (f != null) {
+    PImage pic = loadImage(f.getAbsolutePath());
+    image(pic, 300, 140, 580, 540);
   }
 }
 
